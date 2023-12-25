@@ -1,6 +1,6 @@
 import { ProductNameTypes } from "../types";
 
-export interface IProduct {
+export interface ProductsDataInt {
   id?: string;
   title: string;
   description: string;

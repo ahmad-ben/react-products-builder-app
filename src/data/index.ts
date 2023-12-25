@@ -1,7 +1,7 @@
 import { v4 as uuid } from "uuid";
-import { ICategory, IFormInput, IProduct } from "../interfaces";
+import { ICategory, IFormInput, ProductsDataInt } from "../interfaces";
 
-export const productList: IProduct[] = [
+export const productsData: ProductsDataInt[] = [
   {
     id: uuid(),
     title: "Nike Shoes",
