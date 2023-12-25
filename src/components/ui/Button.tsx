@@ -1,13 +1,19 @@
-import { ReactNode } from "react"
+import { ButtonHTMLAttributes, ReactNode } from "react";
 
-interface ButtonPropsInt {
+interface ButtonPropsInt extends ButtonHTMLAttributes<HTMLButtonElement>{
   children: ReactNode,
-  buttonClasses: string
+  buttonClasses: string,
+  width: "w-fit" | "w-full"
 }
 
-const Button = ({children, buttonClasses}: ButtonPropsInt) => {
+const Button = ({children, buttonClasses, width, ...rest}: ButtonPropsInt) => {
+  console.log(rest);
+
   return (
-    <button className={`${buttonClasses} w-full py-2 rounded-md`} >{ children }</button>
+    <button 
+      className={`${buttonClasses} ${width} py-2 rounded-md`} 
+      {...rest}
+    >{ children }</button>
   )
 }
 

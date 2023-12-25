@@ -1,5 +1,5 @@
 import Image from "../Image/Image";
-import Button from "../ui/button";
+import Button from "../ui/Button";
 
 interface ProductCardPropsInt {
 
@@ -36,8 +36,14 @@ const ProductCard = ({}: ProductCardPropsInt) => {
       </div>
 
       <div className="flex items-center space-x-2 text-white mt-5">
-        <Button buttonClasses="bg-indigo-700" > Edit </Button>
-        <Button buttonClasses="bg-red-700" > Delete </Button>
+        <Button 
+          buttonClasses="bg-indigo-700"
+          width="w-full" 
+          onClick={() => {
+            console.log("Edit button clicked");
+          }}
+        > Edit </Button>
+        <Button buttonClasses="bg-red-700" width="w-full"> Delete </Button>
       </div>
     </div>
   )
