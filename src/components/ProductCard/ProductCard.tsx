@@ -8,10 +8,12 @@ interface ProductCardPropsInt {
 }
 
 const ProductCard = ( {productData} : ProductCardPropsInt) => {
-  const { imageURL, title, description } = productData;
+  const { imageURL, title, description, price, category } = productData;
 
   return (
-    <div className="productCardCom border rounded-e-md p-2 flex flex-col">
+    <div className="productCardCom 
+      max-w-sm mx-auto md:max-w-lg md:max-0
+      border rounded-e-md p-2 flex flex-col">
       <Image 
         imageUrl={imageURL}
         imageAlt="Product image"
@@ -29,10 +31,10 @@ const ProductCard = ( {productData} : ProductCardPropsInt) => {
       </div>
 
       <div className="flex items-center justify-between"> 
-        <span>$ 500,00</span>
+        <span>$ { price }</span>
         <Image 
-          imageUrl={imageURL}
-          imageAlt="Product image"
+          imageUrl={ category.imageURL }
+          imageAlt={ category.name }
           imageClasses="w-10 h-10 rounded-full object-cover"
         />
       </div>
