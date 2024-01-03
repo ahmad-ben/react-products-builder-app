@@ -16,6 +16,5 @@ function App() {
     </div>
   )
 }
-// STOOP: https://youtu.be/b5CQ6XdEGxg?si=NeZ8FzMTB1yKK7cc
 
 export default App
