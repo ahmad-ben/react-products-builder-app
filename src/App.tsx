@@ -1,5 +1,6 @@
 import './App.css'
 import ProductCard from './components/ProductCard/ProductCard'
+import Modal from './components/ui/Modal'
 import { productsData } from './data'
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
       gap-2 md:gap-4 p-10'
     >
       { renderProductsArray }
+      <Modal />
     </main>
   )
 }
