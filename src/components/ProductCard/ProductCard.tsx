@@ -13,18 +13,21 @@ const ProductCard = ( {productData} : ProductCardPropsInt) => {
   return (
     <div className="productCardCom 
       max-w-sm mx-auto md:max-w-lg md:max-0
-      border rounded-e-md p-2 flex flex-col">
+      border rounded-md p-2 flex flex-col space-y-3">
+
+      
       <Image 
         imageUrl={imageURL}
         imageAlt="Product image"
-        imageClasses="rounded-md mb-3"
+        imageClasses="rounded-md h-52 w-full lg:object-cover"
       />
 
-      <h3> { title } </h3>
+      <h3 className="text-lg font-semibold"> {txtSlicer(title, 25)} </h3>
 
-      <p> { txtSlicer(description) } </p>
+      <p className="text-xs text-gray-500 break-words"> 
+        { txtSlicer(description) } </p>
 
-      <div className="flex items-center my-4 space-x-2">
+      <div className="flex items-center space-x-2">
         <span className="w-5 h-5 bg-indigo-600 rounded-full"/>
         <span className="w-5 h-5 bg-yellow-600 rounded-full"/>
         <span className="w-5 h-5 bg-red-600 rounded-full"/>
