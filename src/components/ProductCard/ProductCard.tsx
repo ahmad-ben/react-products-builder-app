@@ -34,7 +34,7 @@ const ProductCard = ( {productData} : ProductCardPropsInt) => {
       </div>
 
       <div className="flex items-center justify-between"> 
-        <span>$ { price }</span>
+        <span className="text-lg text-indigo-600 font-semibold">${ price }</span>
         <Image 
           imageUrl={ category.imageURL }
           imageAlt={ category.name }
@@ -42,7 +42,7 @@ const ProductCard = ( {productData} : ProductCardPropsInt) => {
         />
       </div>
 
-      <div className="flex items-center space-x-2 text-white mt-5">
+      <div className="flex items-center space-x-2 text-white">
         <Button 
           buttonClasses="bg-indigo-700"
           width="w-full" 
