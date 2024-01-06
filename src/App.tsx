@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import './App.css'
 import ProductCard from './components/ProductCard/ProductCard'
 import Modal from './components/ui/Modal'
@@ -8,6 +9,15 @@ function App() {
     productData => 
       <ProductCard productData={productData} key={productData.id} /> 
   )
+  const [isOpen, setIsOpen] = useState(true)
+
+  function closeModal() {
+    setIsOpen(false)
+  }
+
+  function openModal() {
+    setIsOpen(true)
+  }
 
   return (
     <main className='appCom container mx-auto

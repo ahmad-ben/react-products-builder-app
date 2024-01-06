@@ -1,17 +1,11 @@
-import { Dialog, Transition } from '@headlessui/react'
-import { Fragment, useState } from 'react'
+import { Dialog, Transition } from '@headlessui/react';
+import { Fragment } from 'react';
+
+interface ModalPropsInt {
+  
+}
 
 const Modal = () => {
-  let [isOpen, setIsOpen] = useState(true)
-
-  function closeModal() {
-    setIsOpen(false)
-  }
-
-  function openModal() {
-    setIsOpen(true)
-  }
-
   return (
     <>
       <div className="fixed inset-0 flex items-center justify-center">

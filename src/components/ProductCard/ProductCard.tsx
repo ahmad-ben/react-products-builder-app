@@ -15,7 +15,6 @@ const ProductCard = ( {productData} : ProductCardPropsInt) => {
       max-w-sm mx-auto md:max-w-lg md:max-0
       border rounded-md p-2 flex flex-col space-y-3">
 
-      
       <Image 
         imageUrl={imageURL}
         imageAlt="Product image"
