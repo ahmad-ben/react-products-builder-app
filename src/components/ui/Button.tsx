@@ -6,7 +6,7 @@ interface ButtonPropsInt extends ButtonHTMLAttributes<HTMLButtonElement>{
   width: "w-fit" | "w-full"
 }
 
-const Button = ({children, buttonClasses, width, ...rest}: ButtonPropsInt) => {
+const Button = ({children, buttonClasses, width = "w-full", ...rest}: ButtonPropsInt) => {
   console.log(rest);
 
   return (
