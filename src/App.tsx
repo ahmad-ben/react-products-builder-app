@@ -2,8 +2,9 @@ import { useState } from 'react'
 import './App.css'
 import ProductCard from './components/ProductCard/ProductCard'
 import Button from './components/ui/Button'
+import Input from './components/ui/Input'
 import Modal from './components/ui/Modal'
-import { productsData } from './data'
+import { formInputsList, productsData } from './data'
 
 function App() {
   const [isOpen, setIsOpen] = useState(false)
@@ -20,6 +21,13 @@ function App() {
     productData => 
       <ProductCard productData={productData} key={productData.id} /> 
   )
+  const renderFormInputsList = formInputsList.map(
+    inputData => 
+      <div className='flex flex-col'>
+        <label htmlFor={inputData.id}>{ inputData.label }</label>
+        <Input type='text' id={inputData.id} name={inputData.name} />
+      </div>
+  )
   
   return (
     <main className='appCom container mx-auto
@@ -33,6 +41,7 @@ function App() {
         closeModal={closeModal}
         title='Add a new product'
       >
+        { renderFormInputsList }
         <div className='flex items-center space-x-3'>
           <Button 
             buttonClasses='bg-indigo-700 hover:bg-indigo-800' width='w-full'>
