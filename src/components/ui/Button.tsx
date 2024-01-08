@@ -11,7 +11,7 @@ const Button = ({children, buttonClasses, width = "w-full", ...rest}: ButtonProp
 
   return (
     <button 
-      className={`${buttonClasses} ${width} py-2 rounded-md`} 
+      className={`${buttonClasses} ${width} py-2 rounded-lg text-white`} 
       {...rest}
     >{ children }</button>
   )

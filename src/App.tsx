@@ -24,7 +24,10 @@ function App() {
   const renderFormInputsList = formInputsList.map(
     inputData => 
       <div className='flex flex-col'>
-        <label htmlFor={inputData.id}>{ inputData.label }</label>
+        <label 
+          htmlFor={inputData.id} 
+          className='mb-px text-sm font-medium text-gray-700'
+        >{ inputData.label }</label>
         <Input type='text' id={inputData.id} name={inputData.name} />
       </div>
   )
@@ -41,14 +44,16 @@ function App() {
         closeModal={closeModal}
         title='Add a new product'
       >
-        { renderFormInputsList }
-        <div className='flex items-center space-x-3'>
-          <Button 
-            buttonClasses='bg-indigo-700 hover:bg-indigo-800' width='w-full'>
-            Submit</Button>
-          <Button 
-            buttonClasses='bg-gray-300 hover:bg-gray-400' width='w-full'>
-            Cancel</Button>
+        <div className='space-y-3'>
+          { renderFormInputsList }
+          <div className='flex items-center space-x-3'>
+            <Button 
+              buttonClasses='bg-indigo-700 hover:bg-indigo-800' width='w-full'>
+              Submit</Button>
+            <Button 
+              buttonClasses='bg-gray-400 hover:bg-gray-500' width='w-full'>
+              Cancel</Button>
+          </div>
         </div>
       </Modal>
     </main>
