@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from 'react'
+import { ChangeEvent, FormEvent, useState } from 'react'
 import './App.css'
 import ProductCard from './components/ProductCard/ProductCard'
 import Button from './components/ui/Button'
@@ -8,8 +8,7 @@ import { formInputsList, productsData } from './data'
 import { ProductsDataInt } from './interfaces'
 
 function App() {
-  /* -------- STATES -------- */
-  const [productData, setProductData] = useState<ProductsDataInt>({
+  const productDefaultState = {
     title: '',
     description: '',
     imageURL: '',
@@ -19,9 +18,11 @@ function App() {
       name: '',
       imageURL: ''
     }
-  })
+  }
+  /* -------- STATES -------- */
+  const [productData, setProductData] = useState<ProductsDataInt>(productDefaultState);
   const [isOpen, setIsOpen] = useState(false)
-  
+
   /* -------- HANDLERS -------- */
   const closeModal = () => setIsOpen(false)
   const openModal = () => setIsOpen(true)
@@ -33,6 +34,16 @@ function App() {
       [name]: value
     })
   }
+  const submitHandler = (e: FormEvent<HTMLFormElement>): void => {
+    e.preventDefault();
+    console.log("submitHandler: ", productData);
+    
+  }
+  const cancelHandler = () => {
+    console.log("Cancel Handler is fired!!");
+    setProductData(productDefaultState);
+    closeModal();
+  }
 
   /* -------- RENDERS -------- */
   const renderProductsArray = productsData.map(
@@ -41,7 +52,7 @@ function App() {
   )
   const renderFormInputsList = formInputsList.map(
     inputData => 
-      <div className='flex flex-col'>
+      <div key={inputData.id} className='flex flex-col'>
         <label 
           htmlFor={inputData.id} 
           className='mb-px text-sm font-medium text-gray-700'
@@ -65,14 +76,16 @@ function App() {
         closeModal={closeModal}
         title='Add a new product'
       >
-        <form className='space-y-3'>
+        <form onSubmit={submitHandler} className='space-y-3'>
           { renderFormInputsList }
           <div className='flex items-center space-x-3'>
             <Button 
               buttonClasses='bg-indigo-700 hover:bg-indigo-800' width='w-full'>
               Submit</Button>
             <Button 
-              buttonClasses='bg-gray-400 hover:bg-gray-500' width='w-full'>
+              buttonClasses='bg-gray-400 hover:bg-gray-500' width='w-full' 
+              type="button" onClick={cancelHandler}
+            >
               Cancel</Button>
           </div>
         </form>
