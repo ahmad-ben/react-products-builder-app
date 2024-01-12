@@ -6,6 +6,7 @@ import Input from './components/ui/Input'
 import Modal from './components/ui/Modal'
 import { formInputsList, productsData } from './data'
 import { ProductsDataInt } from './interfaces'
+import { productValidation } from './validation'
 
 function App() {
   const productDefaultState = {
@@ -19,6 +20,7 @@ function App() {
       imageURL: ''
     }
   }
+
   /* -------- STATES -------- */
   const [productData, setProductData] = useState<ProductsDataInt>(productDefaultState);
   const [isOpen, setIsOpen] = useState(false)
@@ -34,15 +36,21 @@ function App() {
       [name]: value
     })
   }
-  const submitHandler = (e: FormEvent<HTMLFormElement>): void => {
-    e.preventDefault();
-    console.log("submitHandler: ", productData);
-    
-  }
   const cancelHandler = () => {
     console.log("Cancel Handler is fired!!");
     setProductData(productDefaultState);
     closeModal();
+  }
+  const submitHandler = (e: FormEvent<HTMLFormElement>): void => {
+    e.preventDefault();
+    console.log("submitHandler: ", productData);
+    const errorsObj = productValidation({
+      title: productData.title, 
+      description: productData.description, 
+      imageURL: productData.imageURL, 
+      price: productData.price
+    });
+    console.log(errorsObj);
   }
 
   /* -------- RENDERS -------- */
