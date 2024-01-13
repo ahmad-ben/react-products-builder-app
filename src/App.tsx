@@ -1,5 +1,6 @@
 import { ChangeEvent, FormEvent, useState } from 'react'
 import './App.css'
+import ErrorMessage from './components/Error/ErrorMessage'
 import ProductCard from './components/ProductCard/ProductCard'
 import Button from './components/ui/Button'
 import Input from './components/ui/Input'
@@ -22,42 +23,47 @@ function App() {
   }
 
   /* -------- STATES -------- */
-  const [productData, setProductData] = useState<ProductsDataInt>(productDefaultState);
-  const [isOpen, setIsOpen] = useState(false)
+  const [productData, setProductData] = 
+    useState<ProductsDataInt>(productDefaultState);
+  const [isOpen, setIsOpen] = useState(false);
+  const [formErrors, setFormErrors] = useState({
+    title: '',
+    description: '',
+    imageURL: '',
+    price: '',
+  });
 
   /* -------- HANDLERS -------- */
   const closeModal = () => setIsOpen(false)
   const openModal = () => setIsOpen(true)
   const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    console.log(name, value);
-    setProductData({
-      ...productData ,
+    const updatedProductData = {
+      ...productData,
       [name]: value
-    })
+    };
+    setProductData( updatedProductData );
+    setFormErrors(productValidation( updatedProductData ));
   }
   const cancelHandler = () => {
-    console.log("Cancel Handler is fired!!");
     setProductData(productDefaultState);
     closeModal();
   }
   const submitHandler = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
     const { title, description, imageURL, price } = productData;
-    console.log("submitHandler: ", productData);
-    const errorsObj = productValidation({
+    setFormErrors(productValidation({
       title, 
       description, 
       imageURL, 
       price   
-    });
-    console.log(errorsObj);
+    }));
 
-    const hasErrMessage = Object.values(errorsObj)
+    const hasErrMessage = Object.values(formErrors)
       .some(objProValue => objProValue !== "");
 
     if(hasErrMessage) return;
-    else console.log("Send data to the server!.");
+    else console.log("Send data to the server!. 😝");
 
   }
 
@@ -77,6 +83,7 @@ function App() {
           type='text' id={inputData.id} name={inputData.name} 
           value={productData[inputData.name]} onChange={onChangeHandler}
         />
+        <ErrorMessage msg={formErrors[inputData.name]} />
       </div>
   )
 
