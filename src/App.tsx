@@ -43,14 +43,22 @@ function App() {
   }
   const submitHandler = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
+    const { title, description, imageURL, price } = productData;
     console.log("submitHandler: ", productData);
     const errorsObj = productValidation({
-      title: productData.title, 
-      description: productData.description, 
-      imageURL: productData.imageURL, 
-      price: productData.price
+      title, 
+      description, 
+      imageURL, 
+      price   
     });
     console.log(errorsObj);
+
+    const hasErrMessage = Object.values(errorsObj)
+      .some(objProValue => objProValue !== "");
+
+    if(hasErrMessage) return;
+    else console.log("Send data to the server!.");
+
   }
 
   /* -------- RENDERS -------- */
