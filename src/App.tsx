@@ -38,12 +38,16 @@ function App() {
   const openModal = () => setIsOpen(true)
   const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    const updatedProductData = {
+
+    setProductData({
       ...productData,
       [name]: value
-    };
-    setProductData( updatedProductData );
-    setFormErrors(productValidation( updatedProductData ));
+    });
+
+    setFormErrors({
+      ...productData,
+      [name]: ""
+    });
   }
   const cancelHandler = () => {
     setProductData(productDefaultState);
