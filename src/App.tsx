@@ -33,6 +33,7 @@ function App() {
     imageURL: '',
     price: '',
   });
+  const [chosenColors, setChosenColors] = useState<string[]>([]);
 
   /* -------- HANDLERS -------- */
   const closeModal = () => setIsOpen(false)
@@ -71,6 +72,16 @@ function App() {
     else console.log("Send data to the server!. 😝");
 
   }
+  // const productColorCircleClicked = (productColor: string) => {
+  //   chosenColors.includes(productColor) ? 
+  //     setChosenColors(chosenColors.filter(i => i !== productColor)) :
+  //     setChosenColors([ ...chosenColors, productColor ]);
+  // }
+  const handleNewChosenColors = (prevChosenColors: string[], productColor: string) => {
+    return prevChosenColors.includes(productColor) ? 
+      prevChosenColors.filter(i => i !== productColor):
+      [ ...prevChosenColors, productColor ];
+  }
 
   /* -------- RENDERS -------- */
   const renderProductsArray = productsData.map(
@@ -91,9 +102,18 @@ function App() {
         <ErrorMessage msg={formErrors[inputData.name]} />
       </div>
   )
+  const renderChosenColors = chosenColors.map(
+    chosenColor => 
+      <span key={chosenColor} style={{backgroundColor: chosenColor}} 
+      className={`rounded-md text-white p-1 bg-[${chosenColor}]`} >
+      { chosenColor } </span>
+  )
   const renderProductColorsCircles = productColors.map(
     productColor => 
-      <ProductColorCircle key={productColor} color={productColor} />
+      <ProductColorCircle 
+        key={productColor} color={productColor} 
+        onClick={() => setChosenColors((prevChosenColors) => handleNewChosenColors(prevChosenColors, productColor))} 
+      />
   )
 
   return (
@@ -110,6 +130,9 @@ function App() {
       >
         <form onSubmit={submitHandler} className='space-y-3'>
           { renderFormInputsList }
+          <div className="chosenColorsContainer flex flex-wrap gap-1">
+            { renderChosenColors }
+          </div>
           <div className="productColorsCirclesContainer flex space-x-1">
             { renderProductColorsCircles }
           </div>
