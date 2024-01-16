@@ -1,4 +1,5 @@
 import { ChangeEvent, FormEvent, useState } from 'react'
+import { v4 as uuid } from "uuid"
 import './App.css'
 import ErrorMessage from './components/Error/ErrorMessage'
 import ProductCard from './components/ProductCard/ProductCard'
@@ -24,6 +25,8 @@ function App() {
   }
 
   /* -------- STATES -------- */
+  const [productsDataState, setProductsDataState] = 
+    useState<ProductsDataInt[]>(productsData);
   const [productData, setProductData] = 
     useState<ProductsDataInt>(productDefaultState);
   const [isOpen, setIsOpen] = useState(false);
@@ -47,7 +50,7 @@ function App() {
     });
 
     setFormErrors({
-      ...productData,
+      ...formErrors,
       [name]: ""
     });
   }
@@ -65,26 +68,31 @@ function App() {
       price   
     }));
 
+    console.log("Error Obj: ", formErrors);
+
     const hasErrMessage = Object.values(formErrors)
       .some(objProValue => objProValue !== "");
 
-    if(hasErrMessage) return;
-    else console.log("Send data to the server!. 😝");
-
+    if(hasErrMessage || chosenColors.length === 0) return;
+    setProductsDataState( prevProductsDataState => [
+        {...productData, id: uuid(), colors: chosenColors}, 
+        ...prevProductsDataState
+      ]
+    )
+    setChosenColors([]);
+    setProductData(productDefaultState);
+    closeModal();
   }
-  // const productColorCircleClicked = (productColor: string) => {
-  //   chosenColors.includes(productColor) ? 
-  //     setChosenColors(chosenColors.filter(i => i !== productColor)) :
-  //     setChosenColors([ ...chosenColors, productColor ]);
-  // }
-  const handleNewChosenColors = (prevChosenColors: string[], productColor: string) => {
-    return prevChosenColors.includes(productColor) ? 
-      prevChosenColors.filter(i => i !== productColor):
-      [ ...prevChosenColors, productColor ];
+  const productColorCircleClicked = (productColor: string) => {
+    setChosenColors( (prevChosenColors) => 
+      prevChosenColors.includes(productColor) ? 
+        prevChosenColors.filter(i => i !== productColor):
+        [ ...prevChosenColors, productColor ]
+    )
   }
 
   /* -------- RENDERS -------- */
-  const renderProductsArray = productsData.map(
+  const renderProductsArray = productsDataState.map(
     productData => 
       <ProductCard productData={productData} key={productData.id} /> 
   )
@@ -109,10 +117,10 @@ function App() {
       { chosenColor } </span>
   )
   const renderProductColorsCircles = productColors.map(
-    productColor => 
+    productColor =>  
       <ProductColorCircle 
         key={productColor} color={productColor} 
-        onClick={() => setChosenColors((prevChosenColors) => handleNewChosenColors(prevChosenColors, productColor))} 
+        onClick={() => productColorCircleClicked(productColor)} 
       />
   )
 

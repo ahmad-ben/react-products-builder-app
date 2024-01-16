@@ -46,7 +46,7 @@ const ProductCard = ( {productData} : ProductCardPropsInt) => {
           buttonClasses="bg-indigo-700"
           width="w-full" 
           onClick={() => {
-            console.log("Edit button clicked");
+            // console.log("Edit button clicked");
           }}
         > Edit </Button>
         <Button buttonClasses="bg-red-700" width="w-full"> Delete </Button>
