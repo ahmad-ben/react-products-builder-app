@@ -5,7 +5,8 @@ import ProductCard from './components/ProductCard/ProductCard'
 import Button from './components/ui/Button'
 import Input from './components/ui/Input'
 import Modal from './components/ui/Modal'
-import { formInputsList, productsData } from './data'
+import ProductColorCircle from './components/ui/ProductColorCircle'
+import { formInputsList, productColors, productsData } from './data'
 import { ProductsDataInt } from './interfaces'
 import { productValidation } from './validation'
 
@@ -90,6 +91,10 @@ function App() {
         <ErrorMessage msg={formErrors[inputData.name]} />
       </div>
   )
+  const renderProductColorsCircles = productColors.map(
+    productColor => 
+      <ProductColorCircle key={productColor} color={productColor} />
+  )
 
   return (
     <main className='appCom container mx-auto
@@ -105,6 +110,9 @@ function App() {
       >
         <form onSubmit={submitHandler} className='space-y-3'>
           { renderFormInputsList }
+          <div className="productColorsCirclesContainer flex space-x-1">
+            { renderProductColorsCircles }
+          </div>
           <div className='flex items-center space-x-3'>
             <Button 
               buttonClasses='bg-indigo-700 hover:bg-indigo-800' width='w-full'>
