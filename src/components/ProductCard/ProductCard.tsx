@@ -5,12 +5,23 @@ import Button from "../ui/Button";
 import ProductColorCircle from "../ui/ProductColorCircle";
 
 interface ProductCardPropsInt {
-  productData: ProductsDataInt
+  productData: ProductsDataInt,
+  selectedProductToEdit: ProductsDataInt,
+  setSelectedProductToEdit: (selectedProductToEdit: ProductsDataInt) => void
+  openEditModal: () => void
+  closeEditModal: () => void
 }
 
-const ProductCard = ( {productData} : ProductCardPropsInt) => {
+const ProductCard = ( 
+  {
+    productData, 
+    setSelectedProductToEdit, 
+    openEditModal,
+    closeEditModal
+  } : ProductCardPropsInt
+) => {
   /* -------- VARIABLES -------- */
-  const { imageURL, title, description, price, category, colors } = productData;
+  const {imageURL, title, description, price, category, colors} = productData;
 
   /* -------- RENDERS -------- */
   const renderProductColors = colors.map(color => 
@@ -50,13 +61,16 @@ const ProductCard = ( {productData} : ProductCardPropsInt) => {
 
       <div className="flex items-center space-x-2 text-white">
         <Button 
-          buttonClasses="bg-indigo-700"
-          width="w-full" 
+          buttonClasses="bg-indigo-700" width="w-full" 
           onClick={() => {
-            // console.log("Edit button clicked");
+            setSelectedProductToEdit(productData)
+            openEditModal()
           }}
         > Edit </Button>
-        <Button buttonClasses="bg-red-700" width="w-full"> Delete </Button>
+        <Button 
+          buttonClasses="bg-red-700" width="w-full" 
+          onClick={() => 'DELETE FUNCTIONALITY'}
+        > Delete </Button>
       </div>
     </div>
   )

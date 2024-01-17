@@ -25,7 +25,8 @@ function App() {
       imageURL: ''
     }
   }
-
+  
+  
   /* -------- STATES -------- */
   const [productsDataState, setProductsDataState] = 
     useState<ProductsDataInt[]>(productsData);
@@ -40,10 +41,20 @@ function App() {
   });
   const [chosenColors, setChosenColors] = useState<string[]>([]);
   const [selectedCategory, setSelectedCategory] = useState(categories[0]);
+  const [selectedProductToEdit, setSelectedProductToEdit] = 
+    useState<ProductsDataInt>(productDefaultState);
+  const [isEditModalOpened, setIsEditModalOpened] = 
+    useState<boolean>(false);
 
   /* -------- HANDLERS -------- */
   const closeModal = () => setIsOpen(false)
   const openModal = () => setIsOpen(true)
+  const closeEditModal = () => {
+    console.log("CLOSE EDIT MODAL CLICKED: ", );
+    setIsEditModalOpened(false)
+  }
+  const openEditModal = () => {console.log("OPEN EDIT MODAL CLICKED: ", );
+  setIsEditModalOpened(true)}
   const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
 
@@ -74,12 +85,12 @@ function App() {
     console.log("Error Obj: ", formErrors);
 
     const hasErrMessage = Object.values(formErrors)
-      .some(objProValue => objProValue !== "");
-
+    .some(objProValue => objProValue !== "");
+    
     if(hasErrMessage || chosenColors.length === 0) return;
     setProductsDataState( prevProductsDataState => [
-        {
-          ...productData, 
+      {
+        ...productData, 
           id: uuid(), colors: chosenColors, category: selectedCategory
         }, 
         ...prevProductsDataState
@@ -97,10 +108,18 @@ function App() {
     )
   }
 
+  console.log("isEditModalOpened", isEditModalOpened);
   /* -------- RENDERS -------- */
   const renderProductsArray = productsDataState.map(
     productData => 
-      <ProductCard productData={productData} key={productData.id} /> 
+      <ProductCard 
+        productData={productData} 
+        key={productData.id} 
+        selectedProductToEdit={selectedProductToEdit} 
+        setSelectedProductToEdit={setSelectedProductToEdit}
+        openEditModal={openEditModal} 
+        closeEditModal={closeEditModal} 
+      /> 
   )
   const renderFormInputsList = formInputsList.map(
     inputData => 
@@ -137,10 +156,46 @@ function App() {
     >
       <button  onClick={openModal}>Add</button>
       { renderProductsArray }
+
+      {/* ADD PRODUCT */}
       <Modal
         isOpen={isOpen}
         closeModal={closeModal}
         title='Add a new product'
+      >
+        <form onSubmit={submitHandler} className='space-y-3'>
+          { renderFormInputsList }
+          <Select 
+            selectedCategory={selectedCategory} 
+            setSelectedCategory={setSelectedCategory} 
+          />
+          <div className="productColorsCirclesContainer flex space-x-1">
+            { renderProductColorsCircles }
+          </div>
+          { 
+            chosenColors.length > 0 &&  
+            <div className="chosenColorsContainer flex flex-wrap gap-1">
+              { renderChosenColors }
+            </div>
+          }
+          <div className='flex items-center space-x-3'>
+            <Button 
+              buttonClasses='bg-indigo-700 hover:bg-indigo-800' width='w-full'>
+              Submit</Button>
+            <Button 
+              buttonClasses='bg-gray-400 hover:bg-gray-500' width='w-full' 
+              type="button" onClick={cancelHandler}
+            >
+              Cancel</Button>
+          </div>
+        </form>
+      </Modal>
+
+      {/* EDIT PRODUCT */}
+      <Modal
+        isOpen={isEditModalOpened}
+        closeModal={closeEditModal}
+        title='Edit product'
       >
         <form onSubmit={submitHandler} className='space-y-3'>
           { renderFormInputsList }
