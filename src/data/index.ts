@@ -1,5 +1,5 @@
 import { v4 as uuid } from "uuid";
-import { ICategory, IFormInput, ProductsDataInt } from "../interfaces";
+import { CategoryInt, FormInputInt, ProductsDataInt } from "../interfaces";
 
 export const productsData: ProductsDataInt[] = [
   {
@@ -146,7 +146,7 @@ export const productsData: ProductsDataInt[] = [
   },
 ];
 
-export const formInputsList: IFormInput[] = [
+export const formInputsList: FormInputInt[] = [
   {
     id: "title",
     name: "title",
@@ -187,7 +187,7 @@ export const productColors: string[] = [
   "#645CBB",
 ];
 
-export const categories: ICategory[] = [
+export const categories: CategoryInt[] = [
   {
     id: uuid(),
     name: "Nike",

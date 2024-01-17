@@ -13,14 +13,14 @@ export interface ProductsDataInt {
   };
 }
 
-export interface IFormInput {
+export interface FormInputInt {
   id: string;
   name: ProductNameTypes;
   label: string;
   type: string;
 }
 
-export interface ICategory {
+export interface CategoryInt {
   id: string;
   name: string;
   imageURL: string;

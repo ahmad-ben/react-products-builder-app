@@ -7,6 +7,7 @@ import Button from './components/ui/Button'
 import Input from './components/ui/Input'
 import Modal from './components/ui/Modal'
 import ProductColorCircle from './components/ui/ProductColorCircle'
+import Select from './components/ui/Select'
 import { formInputsList, productColors, productsData } from './data'
 import { ProductsDataInt } from './interfaces'
 import { productValidation } from './validation'
@@ -139,12 +140,16 @@ function App() {
       >
         <form onSubmit={submitHandler} className='space-y-3'>
           { renderFormInputsList }
-          <div className="chosenColorsContainer flex flex-wrap gap-1">
-            { renderChosenColors }
-          </div>
+          <Select />
           <div className="productColorsCirclesContainer flex space-x-1">
             { renderProductColorsCircles }
           </div>
+          { 
+            chosenColors.length > 0 &&  
+            <div className="chosenColorsContainer flex flex-wrap gap-1">
+              { renderChosenColors }
+            </div>
+          }
           <div className='flex items-center space-x-3'>
             <Button 
               buttonClasses='bg-indigo-700 hover:bg-indigo-800' width='w-full'>
