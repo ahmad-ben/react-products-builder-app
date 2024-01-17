@@ -10,6 +10,7 @@ import ProductColorCircle from './components/ui/ProductColorCircle'
 import Select from './components/ui/Select'
 import { categories, formInputsList, productColors, productsData } from './data'
 import { ProductsDataInt } from './interfaces'
+import { ProductInputsNamesType } from './types'
 import { productValidation } from './validation'
 
 function App() {
@@ -25,8 +26,7 @@ function App() {
       imageURL: ''
     }
   }
-  
-  
+
   /* -------- STATES -------- */
   const [productsDataState, setProductsDataState] = 
     useState<ProductsDataInt[]>(productsData);
@@ -49,12 +49,6 @@ function App() {
   /* -------- HANDLERS -------- */
   const closeModal = () => setIsOpen(false)
   const openModal = () => setIsOpen(true)
-  const closeEditModal = () => {
-    console.log("CLOSE EDIT MODAL CLICKED: ", );
-    setIsEditModalOpened(false)
-  }
-  const openEditModal = () => {console.log("OPEN EDIT MODAL CLICKED: ", );
-  setIsEditModalOpened(true)}
   const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
 
@@ -108,6 +102,50 @@ function App() {
     )
   }
 
+  const closeEditModal = () => setIsEditModalOpened(false)
+  const openEditModal = () => setIsEditModalOpened(true)
+  const onEditedProductInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+
+    setSelectedProductToEdit({
+      ...selectedProductToEdit,
+      [name]: value
+    });
+
+    setFormErrors({
+      ...formErrors,
+      [name]: ""
+    });
+  }
+  const submitEditedProductHandler = (e: FormEvent<HTMLFormElement>): void => {
+    e.preventDefault();
+    const { title, description, imageURL, price } = productData;
+    setFormErrors(productValidation({
+      title, 
+      description, 
+      imageURL, 
+      price   
+    }));
+
+    console.log("Error Obj: ", formErrors);
+
+    const hasErrMessage = Object.values(formErrors)
+    .some(objProValue => objProValue !== "");
+    
+    if(hasErrMessage || chosenColors.length === 0) return;
+    setProductsDataState( prevProductsDataState => [
+      {
+        ...productData, 
+          id: uuid(), colors: chosenColors, category: selectedCategory
+        }, 
+        ...prevProductsDataState
+      ]
+    )
+    setChosenColors([]);
+    setProductData(productDefaultState);
+    closeModal();
+  }
+
   console.log("isEditModalOpened", isEditModalOpened);
   /* -------- RENDERS -------- */
   const renderProductsArray = productsDataState.map(
@@ -147,6 +185,21 @@ function App() {
         key={productColor} color={productColor} 
         onClick={() => productColorCircleClicked(productColor)} 
       />
+  )
+  const renderProductInputWithError = (
+    inputId: string, labelText: string, inputName: ProductInputsNamesType 
+  ) => (
+    <div className='flex flex-col'>
+      <label 
+        htmlFor={inputId} 
+        className='mb-px text-sm font-medium text-gray-700'
+      > {labelText} </label>
+      <Input 
+        type='text' id={inputId} name={inputName} 
+        value={selectedProductToEdit[inputName]} onChange={onEditedProductInputChange}
+      />
+      <ErrorMessage msg={""} />
+    </div>
   )
 
   return (
@@ -197,9 +250,14 @@ function App() {
         closeModal={closeEditModal}
         title='Edit product'
       >
-        <form onSubmit={submitHandler} className='space-y-3'>
-          { renderFormInputsList }
-          <Select 
+        <form onSubmit={submitEditedProductHandler} className='space-y-3'>
+
+          {renderProductInputWithError("title", "Product Title", "title")}
+          {renderProductInputWithError("description", "Product Description", "description")}
+          {renderProductInputWithError("ImageURL", "Product Image URL", "imageURL")}
+          {renderProductInputWithError("price", "Product Price", "price")}
+
+          {/* <Select 
             selectedCategory={selectedCategory} 
             setSelectedCategory={setSelectedCategory} 
           />
@@ -211,7 +269,7 @@ function App() {
             <div className="chosenColorsContainer flex flex-wrap gap-1">
               { renderChosenColors }
             </div>
-          }
+          } */}
           <div className='flex items-center space-x-3'>
             <Button 
               buttonClasses='bg-indigo-700 hover:bg-indigo-800' width='w-full'>

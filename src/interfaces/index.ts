@@ -1,4 +1,4 @@
-import { ProductNameTypes } from "../types";
+import { ProductInputsNamesType } from "../types";
 
 export interface ProductsDataInt {
   id?: string;
@@ -15,7 +15,7 @@ export interface ProductsDataInt {
 
 export interface FormInputInt {
   id: string;
-  name: ProductNameTypes;
+  name: ProductInputsNamesType;
   label: string;
   type: string;
 }
