@@ -12,6 +12,7 @@ import { ProductsDataInt } from './interfaces'
 import { productValidation } from './validation'
 
 function App() {
+  /* -------- VARIABLES -------- */
   const productDefaultState = {
     title: '',
     description: '',

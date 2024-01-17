@@ -2,13 +2,22 @@ import { ProductsDataInt } from "../../interfaces";
 import { txtSlicer } from "../../utils/functions";
 import Image from "../Image/Image";
 import Button from "../ui/Button";
+import ProductColorCircle from "../ui/ProductColorCircle";
 
 interface ProductCardPropsInt {
   productData: ProductsDataInt
 }
 
 const ProductCard = ( {productData} : ProductCardPropsInt) => {
-  const { imageURL, title, description, price, category } = productData;
+  /* -------- VARIABLES -------- */
+  const { imageURL, title, description, price, category, colors } = productData;
+
+  /* -------- RENDERS -------- */
+  const renderProductColors = colors.map(color => 
+    <ProductColorCircle 
+      key={color} color={color} 
+    />
+  )
 
   return (
     <div className="productCardCom 
@@ -26,14 +35,12 @@ const ProductCard = ( {productData} : ProductCardPropsInt) => {
       <p className="text-xs text-gray-500 break-words"> 
         { txtSlicer(description) } </p>
 
-      <div className="flex items-center space-x-2">
-        <span className="w-5 h-5 bg-indigo-600 rounded-full"/>
-        <span className="w-5 h-5 bg-yellow-600 rounded-full"/>
-        <span className="w-5 h-5 bg-red-600 rounded-full"/>
+      <div className="flex items-center flex-wrap space-x-1">
+       { renderProductColors }
       </div>
 
       <div className="flex items-center justify-between"> 
-        <span className="text-lg text-indigo-600 font-semibold">${ price }</span>
+        <span className="text-lg text-indigo-600 font-semibold">${price}</span>
         <Image 
           imageUrl={ category.imageURL }
           imageAlt={ category.name }
