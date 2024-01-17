@@ -1,25 +1,40 @@
 import { Listbox, Transition } from '@headlessui/react'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
-import { Fragment, useState } from 'react'
+import { Fragment } from 'react'
 import { categories } from '../../data'
+import { CategoryInt } from '../../interfaces'
+
+interface SelectPropsInt{
+  selectedCategory: CategoryInt;
+  setSelectedCategory: (selectedCategory: CategoryInt) => void
+}
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ')
 }
 
-const Select = () => {
-  const [selected, setSelected] = useState(categories[0])
+const Select = ({ selectedCategory, setSelectedCategory }: SelectPropsInt) => {
+  console.log(selectedCategory);
 
   return (
-    <Listbox value={selected} onChange={setSelected}>
+    <Listbox value={selectedCategory} onChange={setSelectedCategory}>
       {({ open }) => (
         <div>
-          <Listbox.Label className="block text-sm font-medium leading-6 text-gray-900">Category</Listbox.Label>
+          <Listbox.Label 
+            className="block text-sm font-medium leading-6 text-gray-900"
+          >Category</Listbox.Label>
           <div className="relative ">
-            <Listbox.Button className="relative w-full cursor-default rounded-md bg-white py-3 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6">
+            <Listbox.Button 
+              className="relative w-full cursor-default rounded-md bg-white 
+                py-3 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 
+                ring-inset ring-gray-300 
+                focus:outline-none focus:ring-2focus:ring-indigo-500 
+                sm:text-sm sm:leading-6">
               <span className="flex items-center">
-                <img src={selected.imageURL} alt="" className="h-5 w-5 flex-shrink-0 rounded-full" />
-                <span className="ml-3 block truncate">{selected.name}</span>
+                <img 
+                  src={selectedCategory.imageURL} alt="" 
+                  className="h-5 w-5 flex-shrink-0 rounded-full" />
+                <span className="ml-3 block truncate">{selectedCategory.name}</span>
               </span>
               <span className="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2">
                 <ChevronUpDownIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />

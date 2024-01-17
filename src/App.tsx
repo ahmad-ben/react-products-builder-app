@@ -8,7 +8,7 @@ import Input from './components/ui/Input'
 import Modal from './components/ui/Modal'
 import ProductColorCircle from './components/ui/ProductColorCircle'
 import Select from './components/ui/Select'
-import { formInputsList, productColors, productsData } from './data'
+import { categories, formInputsList, productColors, productsData } from './data'
 import { ProductsDataInt } from './interfaces'
 import { productValidation } from './validation'
 
@@ -39,6 +39,7 @@ function App() {
     price: '',
   });
   const [chosenColors, setChosenColors] = useState<string[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState(categories[0]);
 
   /* -------- HANDLERS -------- */
   const closeModal = () => setIsOpen(false)
@@ -77,7 +78,10 @@ function App() {
 
     if(hasErrMessage || chosenColors.length === 0) return;
     setProductsDataState( prevProductsDataState => [
-        {...productData, id: uuid(), colors: chosenColors}, 
+        {
+          ...productData, 
+          id: uuid(), colors: chosenColors, category: selectedCategory
+        }, 
         ...prevProductsDataState
       ]
     )
@@ -140,7 +144,10 @@ function App() {
       >
         <form onSubmit={submitHandler} className='space-y-3'>
           { renderFormInputsList }
-          <Select />
+          <Select 
+            selectedCategory={selectedCategory} 
+            setSelectedCategory={setSelectedCategory} 
+          />
           <div className="productColorsCirclesContainer flex space-x-1">
             { renderProductColorsCircles }
           </div>
