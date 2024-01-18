@@ -10,6 +10,8 @@ interface ProductCardPropsInt {
   setSelectedProductToEdit: (selectedProductToEdit: ProductsDataInt) => void
   openEditModal: () => void
   closeEditModal: () => void
+  productIndex: number
+  setEditedProductIndex: (productIndex: number) => void
 }
 
 const ProductCard = ( 
@@ -17,11 +19,20 @@ const ProductCard = (
     productData, 
     setSelectedProductToEdit, 
     openEditModal,
-    closeEditModal
+    closeEditModal,
+    productIndex,
+    setEditedProductIndex
   } : ProductCardPropsInt
 ) => {
   /* -------- VARIABLES -------- */
   const {imageURL, title, description, price, category, colors} = productData;
+
+  /* -------- FUNCTIONS -------- */
+  const editProductDataClicked = () => {
+    setSelectedProductToEdit(productData)
+    openEditModal()
+    setEditedProductIndex(productIndex)
+  }
 
   /* -------- RENDERS -------- */
   const renderProductColors = colors.map(color => 
@@ -62,10 +73,7 @@ const ProductCard = (
       <div className="flex items-center space-x-2 text-white">
         <Button 
           buttonClasses="bg-indigo-700" width="w-full" 
-          onClick={() => {
-            setSelectedProductToEdit(productData)
-            openEditModal()
-          }}
+          onClick={() => editProductDataClicked()}
         > Edit </Button>
         <Button 
           buttonClasses="bg-red-700" width="w-full" 

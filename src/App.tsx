@@ -45,6 +45,8 @@ function App() {
     useState<ProductsDataInt>(productDefaultState);
   const [isEditModalOpened, setIsEditModalOpened] = 
     useState<boolean>(false);
+  const [editedProductIndex, setEditedProductIndex] = 
+    useState<number>(0);
 
   /* -------- HANDLERS -------- */
   const closeModal = () => setIsOpen(false)
@@ -119,7 +121,12 @@ function App() {
   }
   const submitEditedProductHandler = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
-    const { title, description, imageURL, price } = productData;
+    const { title, description, imageURL, price, colors } = 
+      selectedProductToEdit;
+
+    setChosenColors(colors);
+    console.log(selectedProductToEdit, chosenColors.length);
+
     setFormErrors(productValidation({
       title, 
       description, 
@@ -130,28 +137,27 @@ function App() {
     console.log("Error Obj: ", formErrors);
 
     const hasErrMessage = Object.values(formErrors)
-    .some(objProValue => objProValue !== "");
+      .some(objProValue => objProValue !== "");
     
     if(hasErrMessage || chosenColors.length === 0) return;
-    setProductsDataState( prevProductsDataState => [
-      {
-        ...productData, 
-          id: uuid(), colors: chosenColors, category: selectedCategory
-        }, 
-        ...prevProductsDataState
-      ]
-    )
+
+    const updatedProductsArray = [...productsDataState];
+    updatedProductsArray[editedProductIndex] = selectedProductToEdit;
+    setProductsDataState(updatedProductsArray);
+
     setChosenColors([]);
-    setProductData(productDefaultState);
-    closeModal();
+    setSelectedProductToEdit(productDefaultState);
+    closeEditModal();
   }
 
   console.log("isEditModalOpened", isEditModalOpened);
   /* -------- RENDERS -------- */
   const renderProductsArray = productsDataState.map(
-    productData => 
+    (productData, productIndex) => 
       <ProductCard 
         productData={productData} 
+        productIndex={productIndex}
+        setEditedProductIndex={setEditedProductIndex}
         key={productData.id} 
         selectedProductToEdit={selectedProductToEdit} 
         setSelectedProductToEdit={setSelectedProductToEdit}
