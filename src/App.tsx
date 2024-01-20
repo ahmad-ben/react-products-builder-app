@@ -98,11 +98,17 @@ function App() {
   }
   const productColorCircleClicked = (productColor: string) => {
     setChosenColors( (prevChosenColors) => 
-      prevChosenColors.includes(productColor) ? 
+      prevChosenColors.includes(productColor) 
+        ||
+      selectedProductToEdit.colors.includes(productColor) ? 
         prevChosenColors.filter(i => i !== productColor):
         [ ...prevChosenColors, productColor ]
     )
   }
+
+  console.log('HERE chosenColors: ', chosenColors);
+  console.log('HERE selected product colors: ', selectedProductToEdit.colors);
+  
 
   const closeEditModal = () => setIsEditModalOpened(false)
   const openEditModal = () => setIsEditModalOpened(true)
@@ -142,7 +148,10 @@ function App() {
     if(hasErrMessage || chosenColors.length === 0) return;
 
     const updatedProductsArray = [...productsDataState];
-    updatedProductsArray[editedProductIndex] = selectedProductToEdit;
+    updatedProductsArray[editedProductIndex] = {
+      ...selectedProductToEdit, 
+      colors: chosenColors.concat(selectedProductToEdit.colors)
+    };
     setProductsDataState(updatedProductsArray);
 
     setChosenColors([]);
@@ -266,16 +275,21 @@ function App() {
           {/* <Select 
             selectedCategory={selectedCategory} 
             setSelectedCategory={setSelectedCategory} 
-          />
+          />*/}
           <div className="productColorsCirclesContainer flex space-x-1">
             { renderProductColorsCircles }
           </div>
           { 
-            chosenColors.length > 0 &&  
+            selectedProductToEdit.colors.length > 0 &&  
             <div className="chosenColorsContainer flex flex-wrap gap-1">
-              { renderChosenColors }
+              { chosenColors.concat(selectedProductToEdit.colors).map(
+                productColor => 
+                  <span key={productColor} style={{backgroundColor: productColor}} 
+                  className={`rounded-md text-white p-1 bg-[${productColor}]`} >
+                  { productColor } </span>
+              ) }
             </div>
-          } */}
+          } 
           <div className='flex items-center space-x-3'>
             <Button 
               buttonClasses='bg-indigo-700 hover:bg-indigo-800' width='w-full'>
