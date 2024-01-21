@@ -97,6 +97,9 @@ function App() {
     closeModal();
   }
   const productColorCircleClicked = (productColor: string) => {
+    console.log(productColor);
+    console.log(selectedProductToEdit.colors);
+    
     setChosenColors( (prevChosenColors) => 
       prevChosenColors.includes(productColor) 
         ||
@@ -104,6 +107,12 @@ function App() {
         prevChosenColors.filter(i => i !== productColor):
         [ ...prevChosenColors, productColor ]
     )
+    setSelectedProductToEdit(prev => {
+      return {
+        ...prev, 
+        colors: prev.colors.filter(color => color !== productColor)
+      }
+    }) 
   }
 
   console.log('HERE chosenColors: ', chosenColors);
@@ -127,10 +136,9 @@ function App() {
   }
   const submitEditedProductHandler = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
-    const { title, description, imageURL, price, colors } = 
+    const { title, description, imageURL, price } = 
       selectedProductToEdit;
 
-    setChosenColors(colors);
     console.log(selectedProductToEdit, chosenColors.length);
 
     setFormErrors(productValidation({
@@ -145,7 +153,10 @@ function App() {
     const hasErrMessage = Object.values(formErrors)
       .some(objProValue => objProValue !== "");
     
-    if(hasErrMessage || chosenColors.length === 0) return;
+    if(hasErrMessage 
+        || 
+      (chosenColors.concat(selectedProductToEdit.colors)).length === 0) 
+        return;
 
     const updatedProductsArray = [...productsDataState];
     updatedProductsArray[editedProductIndex] = {
@@ -154,9 +165,9 @@ function App() {
     };
     setProductsDataState(updatedProductsArray);
 
+    closeEditModal();
     setChosenColors([]);
     setSelectedProductToEdit(productDefaultState);
-    closeEditModal();
   }
 
   console.log("isEditModalOpened", isEditModalOpened);
@@ -272,10 +283,15 @@ function App() {
           {renderProductInputWithError("ImageURL", "Product Image URL", "imageURL")}
           {renderProductInputWithError("price", "Product Price", "price")}
 
-          {/* <Select 
-            selectedCategory={selectedCategory} 
-            setSelectedCategory={setSelectedCategory} 
-          />*/}
+          <Select 
+            selectedCategory={selectedProductToEdit.category} 
+            setSelectedCategory={(v) => setSelectedProductToEdit(
+              prev => {return {
+                ...prev,
+                category: v
+              }}
+            )} 
+          />
           <div className="productColorsCirclesContainer flex space-x-1">
             { renderProductColorsCircles }
           </div>

@@ -1,12 +1,11 @@
-import { Listbox, Transition } from '@headlessui/react'
-import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
-import { Fragment } from 'react'
-import { categories } from '../../data'
-import { CategoryInt } from '../../interfaces'
+import { Listbox, Transition } from '@headlessui/react';
+import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid';
+import { Fragment } from 'react';
+import { categories } from '../../data';
 
 interface SelectPropsInt{
-  selectedCategory: CategoryInt;
-  setSelectedCategory: (selectedCategory: CategoryInt) => void
+  selectedCategory: { name: string, imageURL: string };
+  setSelectedCategory: (selectedCategory: {name: string, imageURL: string}) => void
 }
 
 function classNames(...classes: string[]) {
