@@ -40,7 +40,10 @@ function App() {
     price: '',
   });
   const [chosenColors, setChosenColors] = useState<string[]>([]);
-  const [selectedCategory, setSelectedCategory] = useState(categories[0]);
+  const [selectedCategory, setSelectedCategory] = useState<{
+    name: string,
+    imageURL: string
+  }>(categories[0]);
   const [selectedProductToEdit, setSelectedProductToEdit] = 
     useState<ProductsDataInt>(productDefaultState);
   const [isEditModalOpened, setIsEditModalOpened] = 
@@ -229,96 +232,105 @@ function App() {
   )
 
   return (
-    <main className='appCom container mx-auto
-      grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 
-      gap-2 md:gap-4 p-10'
-    >
-      <button  onClick={openModal}>Add</button>
-      { renderProductsArray }
-
-      {/* ADD PRODUCT */}
-      <Modal
-        isOpen={isOpen}
-        closeModal={closeModal}
-        title='Add a new product'
+    <>
+      <button 
+        onClick={openModal}
+        className='
+          block text-white bg-indigo-600 py-3 px-6
+          font-medium rounded-md mt-5 mx-auto
+          hover:bg-indigo-800
+        '
+      >Build a product</button>
+      <main className='appCom container mx-auto
+        grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 
+        gap-2 md:gap-4 pt-5 px-10'
       >
-        <form onSubmit={submitHandler} className='space-y-3'>
-          { renderFormInputsList }
-          <Select 
-            selectedCategory={selectedCategory} 
-            setSelectedCategory={setSelectedCategory} 
-          />
-          <div className="productColorsCirclesContainer flex space-x-1">
-            { renderProductColorsCircles }
-          </div>
-          { 
-            chosenColors.length > 0 &&  
-            <div className="chosenColorsContainer flex flex-wrap gap-1">
-              { renderChosenColors }
+        { renderProductsArray }
+
+        {/* ADD PRODUCT */}
+        <Modal
+          isOpen={isOpen}
+          closeModal={closeModal}
+          title='Add a new product'
+        >
+          <form onSubmit={submitHandler} className='space-y-3'>
+            { renderFormInputsList }
+            <Select 
+              selectedCategory={selectedCategory} 
+              setSelectedCategory={setSelectedCategory} 
+            />
+            <div className="productColorsCirclesContainer flex space-x-1">
+              { renderProductColorsCircles }
             </div>
-          }
-          <div className='flex items-center space-x-3'>
-            <Button 
-              buttonClasses='bg-indigo-700 hover:bg-indigo-800' width='w-full'>
-              Submit</Button>
-            <Button 
-              buttonClasses='bg-gray-400 hover:bg-gray-500' width='w-full' 
-              type="button" onClick={cancelHandler}
-            >
-              Cancel</Button>
-          </div>
-        </form>
-      </Modal>
-
-      {/* EDIT PRODUCT */}
-      <Modal
-        isOpen={isEditModalOpened}
-        closeModal={closeEditModal}
-        title='Edit product'
-      >
-        <form onSubmit={submitEditedProductHandler} className='space-y-3'>
-
-          {renderProductInputWithError("title", "Product Title", "title")}
-          {renderProductInputWithError("description", "Product Description", "description")}
-          {renderProductInputWithError("ImageURL", "Product Image URL", "imageURL")}
-          {renderProductInputWithError("price", "Product Price", "price")}
-
-          <Select 
-            selectedCategory={selectedProductToEdit.category} 
-            setSelectedCategory={(v) => setSelectedProductToEdit(
-              prev => {return {
-                ...prev,
-                category: v
-              }}
-            )} 
-          />
-          <div className="productColorsCirclesContainer flex space-x-1">
-            { renderProductColorsCircles }
-          </div>
-          { 
-            selectedProductToEdit.colors.length > 0 &&  
-            <div className="chosenColorsContainer flex flex-wrap gap-1">
-              { chosenColors.concat(selectedProductToEdit.colors).map(
-                productColor => 
-                  <span key={productColor} style={{backgroundColor: productColor}} 
-                  className={`rounded-md text-white p-1 bg-[${productColor}]`} >
-                  { productColor } </span>
-              ) }
+            { 
+              chosenColors.length > 0 &&  
+              <div className="chosenColorsContainer flex flex-wrap gap-1">
+                { renderChosenColors }
+              </div>
+            }
+            <div className='flex items-center space-x-3'>
+              <Button 
+                buttonClasses='bg-indigo-700 hover:bg-indigo-800' width='w-full'>
+                Submit</Button>
+              <Button 
+                buttonClasses='bg-gray-400 hover:bg-gray-500' width='w-full' 
+                type="button" onClick={cancelHandler}
+              >
+                Cancel</Button>
             </div>
-          } 
-          <div className='flex items-center space-x-3'>
-            <Button 
-              buttonClasses='bg-indigo-700 hover:bg-indigo-800' width='w-full'>
-              Submit</Button>
-            <Button 
-              buttonClasses='bg-gray-400 hover:bg-gray-500' width='w-full' 
-              type="button" onClick={cancelHandler}
-            >
-              Cancel</Button>
-          </div>
-        </form>
-      </Modal>
-    </main>
+          </form>
+        </Modal>
+
+        {/* EDIT PRODUCT */}
+        <Modal
+          isOpen={isEditModalOpened}
+          closeModal={closeEditModal}
+          title='Edit product'
+        >
+          <form onSubmit={submitEditedProductHandler} className='space-y-3'>
+
+            {renderProductInputWithError("title", "Product Title", "title")}
+            {renderProductInputWithError("description", "Product Description", "description")}
+            {renderProductInputWithError("ImageURL", "Product Image URL", "imageURL")}
+            {renderProductInputWithError("price", "Product Price", "price")}
+
+            <Select 
+              selectedCategory={selectedProductToEdit.category} 
+              setSelectedCategory={(v) => setSelectedProductToEdit(
+                prev => {return {
+                  ...prev,
+                  category: v
+                }}
+              )} 
+            />
+            <div className="productColorsCirclesContainer flex space-x-1">
+              { renderProductColorsCircles }
+            </div>
+            { 
+              selectedProductToEdit.colors.length > 0 &&  
+              <div className="chosenColorsContainer flex flex-wrap gap-1">
+                { chosenColors.concat(selectedProductToEdit.colors).map(
+                  productColor => 
+                    <span key={productColor} style={{backgroundColor: productColor}} 
+                    className={`rounded-md text-white p-1 bg-[${productColor}]`} >
+                    { productColor } </span>
+                ) }
+              </div>
+            } 
+            <div className='flex items-center space-x-3'>
+              <Button 
+                buttonClasses='bg-indigo-700 hover:bg-indigo-800' width='w-full'>
+                Submit</Button>
+              <Button 
+                buttonClasses='bg-gray-400 hover:bg-gray-500' width='w-full' 
+                type="button" onClick={cancelHandler}
+              >
+                Cancel</Button>
+            </div>
+          </form>
+        </Modal>
+      </main>
+    </>
   )
 }
 

@@ -33,6 +33,23 @@ const ProductCard = (
     openEditModal()
     setEditedProductIndex(productIndex)
   }
+  const handleProductPrice = (productPrice: string) => {
+    console.log(productPrice.split(""));
+
+    let test = [0, 1, 2, 3];
+    console.log(test.splice(3, 0, 10)); //Why this gives []
+    console.log(test); //Why this gives []
+    
+
+    let enhancedPriceShip = productPrice.split("");
+    productPrice.split("").map((number, idx) => {
+      if(idx % 3 === 0 && idx !== 0) {
+        enhancedPriceShip.splice(idx, 0, ",");
+      }
+    })
+    console.log(enhancedPriceShip.join(""));
+    return enhancedPriceShip.join();  
+  }
 
   /* -------- RENDERS -------- */
   const renderProductColors = colors.map(color => 
@@ -46,6 +63,7 @@ const ProductCard = (
       max-w-sm mx-auto md:max-w-lg md:max-0
       border rounded-md p-2 flex flex-col space-y-3">
 
+      <button onClick={() => handleProductPrice("12345")} >Run the fun</button>
       <Image 
         imageUrl={imageURL}
         imageAlt="Product image"
@@ -61,13 +79,16 @@ const ProductCard = (
        { renderProductColors }
       </div>
 
-      <div className="flex items-center justify-between"> 
-        <span className="text-lg text-indigo-600 font-semibold">${price}</span>
-        <Image 
-          imageUrl={ category.imageURL }
-          imageAlt={ category.name }
-          imageClasses="w-10 h-10 rounded-full object-cover"
-        />
+      <div className="flex items-center justify-between">
+        <span className="text-lg text-indigo-600 font-semibold">price</span>
+        <div className="flex items-center space-x-2">
+          <span className="text-xs font-semibold">{category.name}</span>
+          <Image 
+            imageUrl={category.imageURL} 
+            imageAlt={category.name} 
+            imageClasses="w-10 h-10 rounded-full object-cover" 
+          />
+        </div>
       </div>
 
       <div className="flex items-center space-x-2 text-white">
