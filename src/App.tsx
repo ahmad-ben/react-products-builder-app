@@ -100,9 +100,6 @@ function App() {
     closeModal();
   }
   const productColorCircleClicked = (productColor: string) => {
-    console.log(productColor);
-    console.log(selectedProductToEdit.colors);
-    
     setChosenColors( (prevChosenColors) => 
       prevChosenColors.includes(productColor) 
         ||
@@ -172,6 +169,7 @@ function App() {
     setChosenColors([]);
     setSelectedProductToEdit(productDefaultState);
   }
+  const cancelEditProductHandler = () => closeEditModal()
 
   console.log("isEditModalOpened", isEditModalOpened);
   /* -------- RENDERS -------- */
@@ -323,7 +321,7 @@ function App() {
                 Submit</Button>
               <Button 
                 buttonClasses='bg-gray-400 hover:bg-gray-500' width='w-full' 
-                type="button" onClick={cancelHandler}
+                type="button" onClick={cancelEditProductHandler}
               >
                 Cancel</Button>
             </div>

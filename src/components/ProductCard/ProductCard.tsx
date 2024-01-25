@@ -39,6 +39,28 @@ const ProductCard = (
     let test = [0, 1, 2, 3];
     console.log(test.splice(3, 0, 10)); //Why this gives []
     console.log(test); //Why this gives []
+
+    let test1: (number|string)[] = [11, 22, 33, 44, 55, 66, 77, 88];
+    console.log(test1.splice(2, 0, ",")); //Why this gives []
+    console.log("Here", test1); //Why this gives []
+
+    let test3 = ["1", "2", "3", "4", "5"];
+    console.log(test3.length);
+
+    // for (let index = 0; index < array.length; index++) {
+    //   const element = array[index];
+      
+    // }
+
+    let enhancedArr = test3;
+    for (let idx = test3.length; idx > 3; idx - 3) {
+      let wantedPlace = idx - 3;
+      enhancedArr.splice(wantedPlace, 0, ",");
+      console.log("For works");
+      
+    }
+
+    console.log(enhancedArr);
     
 
     let enhancedPriceShip = productPrice.split("");
