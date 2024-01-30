@@ -33,44 +33,17 @@ const ProductCard = (
     openEditModal()
     setEditedProductIndex(productIndex)
   }
-  const handleProductPrice = (productPrice: string) => {
-    console.log(productPrice.split(""));
+  const handleProductPriceShape = (productPrice: string) => {
+    if(productPrice.length < 4 ) productPrice;
 
-    let test = [0, 1, 2, 3];
-    console.log(test.splice(3, 0, 10)); //Why this gives []
-    console.log(test); //Why this gives []
+    const enhancedProductPriceShip: string[] = productPrice.split("");
 
-    let test1: (number|string)[] = [11, 22, 33, 44, 55, 66, 77, 88];
-    console.log(test1.splice(2, 0, ",")); //Why this gives []
-    console.log("Here", test1); //Why this gives []
-
-    let test3 = ["1", "2", "3", "4", "5"];
-    console.log(test3.length);
-
-    // for (let index = 0; index < array.length; index++) {
-    //   const element = array[index];
-      
-    // }
-
-    let enhancedArr = test3;
-    for (let idx = test3.length; idx > 3; idx - 3) {
-      let wantedPlace = idx - 3;
-      enhancedArr.splice(wantedPlace, 0, ",");
-      console.log("For works");
-      
+    for (let idx = enhancedProductPriceShip.length; idx > 3; idx -= 3) {
+      let commaPlace = idx - 3;
+      enhancedProductPriceShip.splice(commaPlace, 0, ",");
     }
 
-    console.log(enhancedArr);
-    
-
-    let enhancedPriceShip = productPrice.split("");
-    productPrice.split("").map((number, idx) => {
-      if(idx % 3 === 0 && idx !== 0) {
-        enhancedPriceShip.splice(idx, 0, ",");
-      }
-    })
-    console.log(enhancedPriceShip.join(""));
-    return enhancedPriceShip.join();  
+    return enhancedProductPriceShip.join("");  
   }
 
   /* -------- RENDERS -------- */
@@ -85,7 +58,6 @@ const ProductCard = (
       max-w-sm mx-auto md:max-w-lg md:max-0
       border rounded-md p-2 flex flex-col space-y-3">
 
-      <button onClick={() => handleProductPrice("12345")} >Run the fun</button>
       <Image 
         imageUrl={imageURL}
         imageAlt="Product image"
@@ -102,7 +74,7 @@ const ProductCard = (
       </div>
 
       <div className="flex items-center justify-between">
-        <span className="text-lg text-indigo-600 font-semibold">price</span>
+        <span className="text-lg text-indigo-600 font-semibold">{handleProductPriceShape(price)}</span>
         <div className="flex items-center space-x-2">
           <span className="text-xs font-semibold">{category.name}</span>
           <Image 
