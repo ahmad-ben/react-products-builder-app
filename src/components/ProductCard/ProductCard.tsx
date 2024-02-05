@@ -12,6 +12,7 @@ interface ProductCardPropsInt {
   closeEditModal: () => void
   productIndex: number
   setEditedProductIndex: (productIndex: number) => void
+  deleteProductFun: (productId: string) => void
 }
 
 const ProductCard = ( 
@@ -21,11 +22,12 @@ const ProductCard = (
     openEditModal,
     closeEditModal,
     productIndex,
-    setEditedProductIndex
+    setEditedProductIndex,
+    deleteProductFun
   } : ProductCardPropsInt
 ) => {
   /* -------- VARIABLES -------- */
-  const {imageURL, title, description, price, category, colors} = productData;
+  const {imageURL, title, description, price, category, colors, id} = productData;
 
   /* -------- FUNCTIONS -------- */
   const editProductDataClicked = () => {
@@ -92,7 +94,7 @@ const ProductCard = (
         > Edit </Button>
         <Button 
           buttonClasses="bg-red-700" width="w-full" 
-          onClick={() => 'DELETE FUNCTIONALITY'}
+          onClick={() => deleteProductFun(id as string)}
         > Delete </Button>
       </div>
     </div>

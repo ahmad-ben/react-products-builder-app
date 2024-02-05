@@ -114,11 +114,6 @@ function App() {
       }
     }) 
   }
-
-  console.log('HERE chosenColors: ', chosenColors);
-  console.log('HERE selected product colors: ', selectedProductToEdit.colors);
-  
-
   const closeEditModal = () => setIsEditModalOpened(false)
   const openEditModal = () => setIsEditModalOpened(true)
   const onEditedProductInputChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -169,9 +164,13 @@ function App() {
     setChosenColors([]);
     setSelectedProductToEdit(productDefaultState);
   }
-  const cancelEditProductHandler = () => closeEditModal()
+  const cancelEditProductHandler = () => closeEditModal();
+  const deleteProductFun = (productsId: string) => {
+    setProductsDataState(
+      (prev) => prev.filter((productData) => productData.id !== productsId)
+    );
+  }
 
-  console.log("isEditModalOpened", isEditModalOpened);
   /* -------- RENDERS -------- */
   const renderProductsArray = productsDataState.map(
     (productData, productIndex) => 
@@ -184,6 +183,7 @@ function App() {
         setSelectedProductToEdit={setSelectedProductToEdit}
         openEditModal={openEditModal} 
         closeEditModal={closeEditModal} 
+        deleteProductFun={deleteProductFun}
       /> 
   )
   const renderFormInputsList = formInputsList.map(
