@@ -50,6 +50,9 @@ function App() {
     useState<boolean>(false);
   const [editedProductIndex, setEditedProductIndex] = 
     useState<number>(0);
+  const [isConfirmDeleteProductModalOpen, setIsConfirmDeleteProductModalOpen] = 
+    useState<boolean>(false);
+  const [productToDeleteId, setProductToDeleteId] = useState("");
 
   /* -------- HANDLERS -------- */
   const closeModal = () => setIsOpen(false)
@@ -165,10 +168,22 @@ function App() {
     setSelectedProductToEdit(productDefaultState);
   }
   const cancelEditProductHandler = () => closeEditModal();
+  const closeConfirmProductDeleteModal = () => 
+    setIsConfirmDeleteProductModalOpen(false);
   const deleteProductFun = (productsId: string) => {
+    setProductToDeleteId(productsId);
+    setIsConfirmDeleteProductModalOpen(true);
+  }
+  const confirmProductDeletion = () => {
     setProductsDataState(
-      (prev) => prev.filter((productData) => productData.id !== productsId)
+      (prev) => prev.filter((productData) => productData.id !== productToDeleteId)
     );
+    setProductToDeleteId("");
+    closeConfirmProductDeleteModal();
+  }
+  const cancelProductDeletion = () => {
+    setProductToDeleteId("");
+    closeConfirmProductDeleteModal();
   }
 
   /* -------- RENDERS -------- */
@@ -327,7 +342,21 @@ function App() {
             </div>
           </form>
         </Modal>
+
+      {/* CONFIRM DELETE PRODUCT */}
+      <Modal
+        isOpen={isConfirmDeleteProductModalOpen}
+        closeModal={closeConfirmProductDeleteModal}
+        title='Confirm Deletes'
+      >
+        <>Confirm delete.</>
+
+        <button className="mr-5 bg-green" onClick={confirmProductDeletion} > Sf siybo hh </button>
+        <button className="mr-5 bg-green" onClick={cancelProductDeletion} > Blach hh </button>
+
+      </Modal>
       </main>
+      
     </>
   )
 }
