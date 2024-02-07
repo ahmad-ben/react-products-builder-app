@@ -352,7 +352,7 @@ function App() {
       >
         <div className="flex items-center space-x-3">
           <Button buttonClasses="bg-[#c2344d] hover:bg-red-800 text-white" onClick={confirmProductDeletion}>Yes, remove</Button>
-          <Button buttonClasses="bg-gray-300 hover:bg-gray-400" onClick={cancelProductDeletion}>
+          <Button buttonClasses="bg-[#f5f5fa] hover:bg-gray-300 text-black" onClick={cancelProductDeletion}>
             Cancel
           </Button>
         </div>
