@@ -283,10 +283,10 @@ function App() {
             }
             <div className='flex items-center space-x-3'>
               <Button 
-                buttonClasses='bg-indigo-700 hover:bg-indigo-800' width='w-full'>
+                buttonClasses='bg-indigo-700 hover:bg-indigo-800 text-white' width='w-full'>
                 Submit</Button>
               <Button 
-                buttonClasses='bg-gray-400 hover:bg-gray-500' width='w-full' 
+                buttonClasses='bg-gray-400 hover:bg-gray-500 text-white' width='w-full' 
                 type="button" onClick={cancelHandler}
               >
                 Cancel</Button>
@@ -332,10 +332,10 @@ function App() {
             } 
             <div className='flex items-center space-x-3'>
               <Button 
-                buttonClasses='bg-indigo-700 hover:bg-indigo-800' width='w-full'>
+                buttonClasses='bg-indigo-700 hover:bg-indigo-800 text-white'>
                 Submit</Button>
               <Button 
-                buttonClasses='bg-gray-400 hover:bg-gray-500' width='w-full' 
+                buttonClasses='bg-gray-400 hover:bg-gray-500 text-white' 
                 type="button" onClick={cancelEditProductHandler}
               >
                 Cancel</Button>
@@ -347,12 +347,15 @@ function App() {
       <Modal
         isOpen={isConfirmDeleteProductModalOpen}
         closeModal={closeConfirmProductDeleteModal}
-        title='Confirm Deletes'
+        title="Are you sure you want to remove this Product from your Store?"
+        description="Deleting this product will remove it permanently from your inventory. Any associated data, sales history, and other related information will also be deleted. Please make sure this is the intended action."
       >
-        <>Confirm delete.</>
-
-        <button className="mr-5 bg-green" onClick={confirmProductDeletion} > Sf siybo hh </button>
-        <button className="mr-5 bg-green" onClick={cancelProductDeletion} > Blach hh </button>
+        <div className="flex items-center space-x-3">
+          <Button buttonClasses="bg-[#c2344d] hover:bg-red-800 text-white" onClick={confirmProductDeletion}>Yes, remove</Button>
+          <Button buttonClasses="bg-gray-300 hover:bg-gray-400" onClick={cancelProductDeletion}>
+            Cancel
+          </Button>
+        </div>
 
       </Modal>
       </main>
@@ -362,3 +365,6 @@ function App() {
 }
 
 export default App
+
+// STOP: https://github.com/codeawy/reactjs-basics-online-course-project-2/commits/master/
+

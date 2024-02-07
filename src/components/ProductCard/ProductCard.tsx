@@ -89,11 +89,11 @@ const ProductCard = (
 
       <div className="flex items-center space-x-2 text-white">
         <Button 
-          buttonClasses="bg-indigo-700" width="w-full" 
+          buttonClasses="bg-indigo-700 text-white" width="w-full" 
           onClick={() => editProductDataClicked()}
         > Edit </Button>
         <Button 
-          buttonClasses="bg-red-700" width="w-full" 
+          buttonClasses="bg-red-700 text-white" width="w-full" 
           onClick={() => deleteProductFun(id as string)}
         > Delete </Button>
       </div>
