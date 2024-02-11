@@ -84,8 +84,6 @@ function App() {
       price   
     }));
 
-    console.log("Error Obj: ", formErrors);
-
     const hasErrMessage = Object.values(formErrors)
     .some(objProValue => objProValue !== "");
     
@@ -137,16 +135,12 @@ function App() {
     const { title, description, imageURL, price } = 
       selectedProductToEdit;
 
-    console.log(selectedProductToEdit, chosenColors.length);
-
     setFormErrors(productValidation({
       title, 
       description, 
       imageURL, 
       price   
     }));
-
-    console.log("Error Obj: ", formErrors);
 
     const hasErrMessage = Object.values(formErrors)
       .some(objProValue => objProValue !== "");
@@ -367,6 +361,4 @@ function App() {
 }
 
 export default App
-
-// STOP: https://github.com/codeawy/reactjs-basics-online-course-project-2/commits/master/
 

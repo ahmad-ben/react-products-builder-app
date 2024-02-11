@@ -7,14 +7,12 @@ interface SelectPropsInt{
   selectedCategory: { name: string, imageURL: string };
   setSelectedCategory: (selectedCategory: {name: string, imageURL: string}) => void
 }
-
+ss
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ')
 }
 
 const Select = ({ selectedCategory, setSelectedCategory }: SelectPropsInt) => {
-  console.log(selectedCategory);
-
   return (
     <Listbox value={selectedCategory} onChange={setSelectedCategory}>
       {({ open }) => (
