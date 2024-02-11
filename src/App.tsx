@@ -351,7 +351,9 @@ function App() {
         description="Deleting this product will remove it permanently from your inventory. Any associated data, sales history, and other related information will also be deleted. Please make sure this is the intended action."
       >
         <div className="flex items-center space-x-3">
-          <Button buttonClasses="bg-[#c2344d] hover:bg-red-800 text-white" onClick={confirmProductDeletion}>Yes, remove</Button>
+          <Button buttonClasses="bg-[#c2344d] hover:bg-red-800 text-white" onClick={confirmProductDeletion}>
+            Yes, remove
+          </Button>
           <Button buttonClasses="bg-[#f5f5fa] hover:bg-gray-300 text-black" onClick={cancelProductDeletion}>
             Cancel
           </Button>
