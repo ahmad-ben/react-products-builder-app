@@ -7,7 +7,7 @@ interface SelectPropsInt{
   selectedCategory: { name: string, imageURL: string };
   setSelectedCategory: (selectedCategory: {name: string, imageURL: string}) => void
 }
-ss
+
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ')
 }

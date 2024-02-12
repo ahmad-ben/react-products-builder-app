@@ -1,4 +1,5 @@
 import { ChangeEvent, FormEvent, useState } from 'react'
+import toast, { Toaster } from 'react-hot-toast'
 import { v4 as uuid } from "uuid"
 import './App.css'
 import ErrorMessage from './components/Error/ErrorMessage'
@@ -174,6 +175,7 @@ function App() {
     );
     setProductToDeleteId("");
     closeConfirmProductDeleteModal();
+    toast.success('Product deleted.');
   }
   const cancelProductDeletion = () => {
     setProductToDeleteId("");
@@ -337,25 +339,25 @@ function App() {
           </form>
         </Modal>
 
-      {/* CONFIRM DELETE PRODUCT */}
-      <Modal
-        isOpen={isConfirmDeleteProductModalOpen}
-        closeModal={closeConfirmProductDeleteModal}
-        title="Are you sure you want to remove this Product from your Store?"
-        description="Deleting this product will remove it permanently from your inventory. Any associated data, sales history, and other related information will also be deleted. Please make sure this is the intended action."
-      >
-        <div className="flex items-center space-x-3">
-          <Button buttonClasses="bg-[#c2344d] hover:bg-red-800 text-white" onClick={confirmProductDeletion}>
-            Yes, remove
-          </Button>
-          <Button buttonClasses="bg-[#f5f5fa] hover:bg-gray-300 text-black" onClick={cancelProductDeletion}>
-            Cancel
-          </Button>
-        </div>
+        {/* CONFIRM DELETE PRODUCT */}
+        <Modal
+          isOpen={isConfirmDeleteProductModalOpen}
+          closeModal={closeConfirmProductDeleteModal}
+          title="Are you sure you want to remove this Product from your Store?"
+          description="Deleting this product will remove it permanently from your inventory. Any associated data, sales history, and other related information will also be deleted. Please make sure this is the intended action."
+        >
+          <div className="flex items-center space-x-3">
+            <Button buttonClasses="bg-[#c2344d] hover:bg-red-800 text-white" onClick={confirmProductDeletion}>
+              Yes, remove
+            </Button>
+            <Button buttonClasses="bg-[#f5f5fa] hover:bg-gray-300 text-black" onClick={cancelProductDeletion}>
+              Cancel
+            </Button>
+          </div>
 
-      </Modal>
+        </Modal>
       </main>
-      
+      <Toaster/>
     </>
   )
 }
