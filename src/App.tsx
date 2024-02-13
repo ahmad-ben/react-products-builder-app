@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useState } from 'react'
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 import toast, { Toaster } from 'react-hot-toast'
 import { v4 as uuid } from "uuid"
 import './App.css'
@@ -85,21 +85,24 @@ function App() {
       price   
     }));
 
-    const hasErrMessage = Object.values(formErrors)
-    .some(objProValue => objProValue !== "");
+    const hasErrMessage = Object.values(formErrors).some(objProValue => objProValue !== "");
+
+    console.log("hasErrMessage before", hasErrMessage);
+    
     
     if(hasErrMessage || chosenColors.length === 0) return;
     setProductsDataState( prevProductsDataState => [
       {
         ...productData, 
           id: uuid(), colors: chosenColors, category: selectedCategory
-        }, 
+      }, 
         ...prevProductsDataState
       ]
     )
     setChosenColors([]);
     setProductData(productDefaultState);
     closeModal();
+    toast.success("New product added.")
   }
   const productColorCircleClicked = (productColor: string) => {
     setChosenColors( (prevChosenColors) => 
@@ -182,6 +185,13 @@ function App() {
     closeConfirmProductDeleteModal();
   }
 
+  useEffect(() => {
+    console.log("formError changed: ", formErrors);
+
+    const hasErrMessage = Object.values(formErrors).some(objProValue => objProValue !== "");
+
+    console.log("hasErrMessage after", hasErrMessage);
+  },[formErrors])
   /* -------- RENDERS -------- */
   const renderProductsArray = productsDataState.map(
     (productData, productIndex) => 
