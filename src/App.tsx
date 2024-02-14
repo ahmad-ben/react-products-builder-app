@@ -162,6 +162,7 @@ function App() {
     setProductsDataState(updatedProductsArray);
 
     closeEditModal();
+    toast.success("Product updated.")
     setChosenColors([]);
     setSelectedProductToEdit(productDefaultState);
   }
